@@ -1,0 +1,15 @@
+
+.calendar-wrapper-btn {
+    color: rgb(255, 255, 255) !important;
+    text-transform: none !important;
+    font-size: 18px !important;
+}
+
+.clear-btn {
+    background-color: rgb(231, 105, 105) !important;
+}
+
+.apply-btn {
+    background-color: rgb(109, 212, 131) !important;
+}
+
