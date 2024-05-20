@@ -115,6 +115,7 @@ const TezDateRangePicker = ({
                                 ${isPast && "past-date"}
                                 ${isWithinRange(day + 1) && "in-range"} 
                                 ${selectedStartDate &&
+                                    selectedStartDate !== "" &&
                                     selectedStartDate.getDate() === day + 1 &&
                                     selectedStartDate.getMonth() ===
                                     month.getMonth() &&
@@ -124,6 +125,7 @@ const TezDateRangePicker = ({
                                     }
                                     
                                     ${selectedEndDate &&
+                                    selectedEndDate !== null &&
                                     selectedEndDate.getDate() === day + 1 &&
                                     selectedEndDate.getMonth() ===
                                     month.getMonth() &&
@@ -138,6 +140,7 @@ const TezDateRangePicker = ({
                                 <div
                                     className={`inner-date
                                     ${selectedStartDate &&
+                                        selectedStartDate !== "" &&
                                         selectedStartDate.getDate() === day + 1 &&
                                         selectedStartDate.getMonth() ===
                                         month.getMonth() &&
@@ -146,6 +149,7 @@ const TezDateRangePicker = ({
                                         "selected-start"
                                         }
                                         ${selectedEndDate &&
+                                        selectedEndDate !== null &&
                                         selectedEndDate.getDate() ===
                                         day + 1 &&
                                         selectedEndDate.getMonth() ===
