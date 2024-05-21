@@ -6,6 +6,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import "./calendarWrapper.css";
 
 export default function CalendarWrapper({
+    disabledDates,
     firstValue,
     secondValue,
     handleFirstvalue,
@@ -22,27 +23,6 @@ export default function CalendarWrapper({
     ] = useState(2);
 
     const [fMonth, setFMonth] = useState(0);
-
-    const disabledDates = [
-        "2024-07-11",
-        "2024-07-12",
-        "2024-06-21",
-        "2024-06-18",
-        "2024-06-19",
-        "2024-08-08",
-        "2024-10-09",
-        "2024-05-22",
-        "2024-10-31",
-        "2024-05-11",
-        "2024-05-24",
-        "2024-05-25",
-        "2024-5-28",
-        "2024-5-29",
-        "2024-5-30",
-        "2024-5-31",
-        "2024-5-27",
-        "2024-5-26",
-    ];
 
     function parsedDisableDates() {
         let parsed = [];
@@ -154,6 +134,9 @@ export default function CalendarWrapper({
 
         return res;
     };
+
+
+
 
     const handleAddtionOfDays = (daysValue) => {
         if (startValue !== null) {

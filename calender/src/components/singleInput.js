@@ -1,8 +1,13 @@
 import { Box, Popover, TextField } from "@mui/material";
 import { useState } from "react";
 import CalendarWrapper from "./calendarWrapper";
+import "./inputBox.css"
 
-export default function SingleInput() {
+export default function SingleInput({
+    sx,
+    disabledDates,
+    onChange
+}) {
     const [finalCheckInValue, setFinalCheckInValue] = useState("");
 
     const [finalCheckOutValue, setFinalCheckOutValue] = useState("");
@@ -41,10 +46,14 @@ export default function SingleInput() {
     };
 
     const handleFirstValue = (value) => {
+
         if (value === null) {
             setCheckInValue("");
             setFinalCheckInValue("");
             setValueToDisplay("");
+
+            onChange(checkInValue, checkOutValue)
+
             return;
         }
 
@@ -57,6 +66,9 @@ export default function SingleInput() {
         setValueToDisplay(
             tempVal === checkOutValue ? tempVal : tempVal + " - " + checkOutValue
         );
+
+        onChange(tempVal, checkOutValue)
+
     };
 
     const handleSecondValue = (value) => {
@@ -64,6 +76,7 @@ export default function SingleInput() {
             setCheckOutValue("");
             setFinalCheckOutValue("");
             setValueToDisplay("");
+
             return;
         }
 
@@ -76,6 +89,7 @@ export default function SingleInput() {
         setValueToDisplay(
             checkInValue === tempVal ? checkInValue : checkInValue + " - " + tempVal
         );
+
     };
 
     const sentFirstValue = () => {
@@ -104,6 +118,8 @@ export default function SingleInput() {
         setFinalCheckInValue(checkInValue);
         setFinalCheckOutValue(checkOutValue);
         setFinalValueToDisplay(finalCheckInValue + "-" + finalCheckOutValue);
+        onChange(checkInValue, checkOutValue)
+        setCalendarAnchor(null);
     };
 
     const handleClear = () => {
@@ -138,7 +154,9 @@ export default function SingleInput() {
                             },
                         }}
                     >
+
                         <CalendarWrapper
+                            disabledDates={disabledDates}
                             firstValue={sentFirstValue()}
                             secondValue={sentSecondValue()}
                             handleFirstvalue={handleFirstValue}
@@ -146,10 +164,15 @@ export default function SingleInput() {
                             apply={handleApplyBtnClick}
                             onClear={handleClear}
                         />
+
                     </Popover>
                 ) : null}
 
                 <TextField
+                    sx={{
+                        ...sx
+                    }}
+                    className="date-range-input-field"
                     aria-describedby={id}
                     value={valueToDisplay}
                     onClick={handleInputClick}

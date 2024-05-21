@@ -8,8 +8,13 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import CalendarWrapper from "./calendarWrapper";
+import "./inputBox.css"
 
-export default function TwoInputs() {
+export default function TwoInputs({
+    sx,
+    disabledDates,
+    onChange
+}) {
     const [finalCheckInValue, setFinalCheckInValue] = useState("");
 
     const [finalCheckOutValue, setFinalCheckOutValue] = useState("");
@@ -75,7 +80,9 @@ export default function TwoInputs() {
         let month = value.getMonth() + 1;
         let year = value.getFullYear();
 
-        setCheckInValue(date + "/" + month + "/" + year);
+        let temp = date + "/" + month + "/" + year
+        setCheckInValue(temp);
+
     };
 
     const handleSecondValue = (value) => {
@@ -88,13 +95,17 @@ export default function TwoInputs() {
         let month = value.getMonth() + 1;
         let year = value.getFullYear();
 
-        setCheckOutValue(date + "/" + month + "/" + year);
+        let temp = date + "/" + month + "/" + year
+        setCheckOutValue(temp);
+
     };
 
     const handleApplyBtnClick = () => {
         console.log("here");
         setFinalCheckInValue(checkInValue);
         setFinalCheckOutValue(checkOutValue);
+        onChange(checkInValue, checkOutValue)
+        setCalendarAnchor(null);
     };
 
 
@@ -135,6 +146,7 @@ export default function TwoInputs() {
                         }}
                     >
                         <CalendarWrapper
+                            disabledDates={disabledDates}
                             firstValue={sentFirstValue()}
                             secondValue={sentSecondValue()}
                             handleFirstvalue={handleFirstValue}
@@ -146,6 +158,10 @@ export default function TwoInputs() {
                 ) : null}
 
                 <TextField
+                    sx={{
+                        ...sx
+                    }}
+                    className="date-range-input-field"
                     aria-describedby={id}
                     value={checkInValue}
                     onClick={handleInputClick}
@@ -156,6 +172,10 @@ export default function TwoInputs() {
                 />
 
                 <TextField
+                    sx={{
+                        ...sx
+                    }}
+                    className="date-range-input-field"
                     value={checkOutValue}
                     onClick={handleInputClick}
                     variant="outlined"

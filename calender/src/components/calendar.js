@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./calendar.css";
 
 const TezDateRangePicker = ({
@@ -35,6 +36,9 @@ const TezDateRangePicker = ({
 
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+    // To disable selection on clicking the date range which contains disabled dates. 
+    const [shouldDisableSelectionOnClickedDate, setShouldDisableSelectionOnClickedDate] = useState(false)
+
     const handleDateClick = (day) => {
         const selectedDate = new Date(month.getFullYear(), month.getMonth(), day);
 
@@ -52,13 +56,62 @@ const TezDateRangePicker = ({
         if (!selectedStartDate || selectedEndDate) {
             onDateSelect(selectedDate, null);
         }
-        // else if (selectedDate > selectedStartDate) {
-        //     onDateSelect(selectedStartDate, selectedDate);
-        // }
+        else if (selectedDate > selectedStartDate) {
+            if (isRangeContainsDisabledDate(selectedStartDate, selectedDate)) {
+                console.log("here 1");
+                setShouldDisableSelectionOnClickedDate(true)
+                return
+            }
+            setShouldDisableSelectionOnClickedDate(false)
+            onDateSelect(selectedStartDate, selectedDate);
+        }
         else {
+            if (isRangeContainsDisabledDate(selectedDate, selectedStartDate)) {
+                console.log("here 2");
+                setShouldDisableSelectionOnClickedDate(true)
+                return
+            }
+            setShouldDisableSelectionOnClickedDate(false)
             onDateSelect(selectedDate, selectedStartDate);
         }
     };
+
+
+    const checkIfSelectionIsAvailable = (day) => {
+        setShouldDisableSelectionOnClickedDate(false)
+        const selectedDate = new Date(month.getFullYear(), month.getMonth(), day);
+
+        if (isDateDisabled(selectedDate)) {
+            return;
+        }
+
+        const currentDate = new Date().setHours(0, 0, 0, 0);
+        if (
+            selectedDate.setHours(0, 0, 0, 0) < currentDate ||
+            isDateDisabled(selectedDate)
+        ) {
+            return;
+        }
+        if (!selectedStartDate || selectedEndDate) {
+
+        }
+        else if (selectedDate > selectedStartDate) {
+            if (isRangeContainsDisabledDate(selectedStartDate, selectedDate)) {
+                console.log("here 1");
+                setShouldDisableSelectionOnClickedDate(true)
+                return
+            }
+            setShouldDisableSelectionOnClickedDate(false)
+        }
+        else {
+            if (isRangeContainsDisabledDate(selectedDate, selectedStartDate)) {
+                console.log("here 2");
+                setShouldDisableSelectionOnClickedDate(true)
+                return
+            }
+            setShouldDisableSelectionOnClickedDate(false)
+        }
+    }
 
     const isWithinRange = (day) => {
         if (!selectedStartDate || !selectedEndDate) return false;
@@ -81,6 +134,18 @@ const TezDateRangePicker = ({
                 );
             });
         }
+    };
+
+    const isRangeContainsDisabledDate = (startValue, endValue) => {
+        let res = false;
+        if (startValue !== null && endValue !== null) {
+
+            res = disabledDates.some((disabledDate) => {
+                return disabledDate > startValue && disabledDate < endValue;
+            });
+        }
+
+        return res;
     };
 
     return (
@@ -136,6 +201,7 @@ const TezDateRangePicker = ({
                                     
                                     ${isDateDisabled(currentDate) && "booked"}`}
                                 onClick={() => handleDateClick(day + 1)}
+                                onMouseOver={() => checkIfSelectionIsAvailable(day + 1)}
                             >
                                 <div
                                     className={`inner-date
@@ -148,6 +214,11 @@ const TezDateRangePicker = ({
                                         month.getFullYear() &&
                                         "selected-start"
                                         }
+
+                                        ${isDateDisabled(currentDate) && "disabled-inner-date"}
+
+                                        ${shouldDisableSelectionOnClickedDate && "disabled-inner-date"}
+
                                         ${selectedEndDate &&
                                         selectedEndDate !== null &&
                                         selectedEndDate.getDate() ===

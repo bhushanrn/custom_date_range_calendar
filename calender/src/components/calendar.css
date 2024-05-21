@@ -99,12 +99,22 @@
   height: 40px;
   width: 40px;
   cursor: pointer;
-
 }
+
+.disabled-inner-date {
+  cursor: not-allowed;
+}
+
+.disabled-inner-date:hover {
+  cursor: not-allowed;
+  border: none !important;
+}
+
 .inner-date:hover{
   border-radius: 50%;
   border: 1px dashed #ccc;
 }
+
 .rounded{
   background: red;
 }
@@ -146,7 +156,7 @@
 
 .booked{
   color: rgb(226, 88, 53);
-  pointer-events: none; 
+  /* pointer-events: none;  */
 }
 
 .days-button{ 
