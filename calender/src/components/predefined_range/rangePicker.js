@@ -45,6 +45,13 @@ const RangePicker = ({
     ] = useState(false);
 
     const handleDateClick = (day) => {
+
+
+        if (minDays === maxDays) {
+            handleFixedDateRange(day)
+            return
+        }
+
         const selectedDate = new Date(month.getFullYear(), month.getMonth(), day);
 
         if (isDateDisabled(selectedDate)) {
@@ -63,7 +70,8 @@ const RangePicker = ({
         } else if (selectedDate > selectedStartDate) {
             if (
                 isRangeContainsDisabledDate(selectedStartDate, selectedDate) ||
-                !checkIfSelectionIsAvailableByLimit(day)
+                !checkIfSelectionIsAvailableByLimit(day) ||
+                checkIfFixedDateRangeIsSelectable(day)
             ) {
                 console.log("here 1");
                 setShouldDisableSelectionOnHoveredDate(true);
@@ -74,7 +82,8 @@ const RangePicker = ({
         } else {
             if (
                 isRangeContainsDisabledDate(selectedDate, selectedStartDate) ||
-                !checkIfSelectionIsAvailableByLimit(day)
+                !checkIfSelectionIsAvailableByLimit(day) ||
+                checkIfFixedDateRangeIsSelectable(day)
             ) {
                 console.log("here 2");
                 setShouldDisableSelectionOnHoveredDate(true);
@@ -84,6 +93,32 @@ const RangePicker = ({
             onDateSelect(selectedDate, selectedStartDate);
         }
     };
+
+    const checkIfFixedDateRangeIsSelectable = (day) => {
+
+        const selectedDate = new Date(month.getFullYear(), month.getMonth(), day);
+
+        const finalDate = new Date(month.getFullYear(), month.getMonth(), day + minDays - 1)
+
+        let temp = isRangeContainsDisabledDate(selectedDate, finalDate)
+        console.log(temp);
+        return temp
+    }
+
+    const handleFixedDateRange = (day) => {
+        const selectedDate = new Date(month.getFullYear(), month.getMonth(), day);
+
+        const finalDate = new Date(month.getFullYear(), month.getMonth(), day + minDays - 1)
+
+        let temp = isRangeContainsDisabledDate(selectedDate, finalDate)
+
+        if (temp) {
+
+        } else {
+            onDateSelect(selectedDate, finalDate);
+        }
+
+    }
 
     const checkIfSelectionIsAvailableByLimit = (day) => {
         let res = false;
@@ -116,6 +151,11 @@ const RangePicker = ({
 
         if (isDateDisabled(selectedDate)) {
             return res;
+        }
+
+        if (checkIfFixedDateRangeIsSelectable(day)) {
+            res = true
+            return res
         }
 
         const currentDate = new Date().setHours(0, 0, 0, 0);
@@ -217,14 +257,13 @@ const RangePicker = ({
         let res = false;
         if (startValue !== null && endValue !== null) {
             res = disabledDates.some((disabledDate) => {
-                return disabledDate > startValue && disabledDate < endValue;
+                return disabledDate >= startValue && disabledDate <= endValue;
             });
         }
 
         return res;
     };
 
-    // ${checkIfSelectionIsAvailableByLimit(day + 1) && !checkIfSelectionShouldbeDisableByConsideringDisabledDates(day + 1) && "in-range"}
 
     return (
         <div className="date-range-picker">

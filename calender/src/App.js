@@ -43,7 +43,7 @@ function App() {
 
   return (
     <>
-      <br /> <br /> <br /> <br />
+      <br /> <br /> <br />
 
       <h3>Two Inputs date range selector : </h3>
       <br />
@@ -52,7 +52,7 @@ function App() {
         onChange={handleChangeValues}
       />
 
-      <br /> <br /> <br /> <br />
+      <br /> <br /> <br />
 
       <h3>One Input date range selector : </h3>
       <br />
@@ -61,15 +61,28 @@ function App() {
         onChange={handleChangeValues}
       />
 
-      <br /> <br /> <br /> <br />
+      <br /> <br /> <br />
 
       <h3>Predefined minDays and maxDays date range selector : minDays = 3 , maxDays = 7 </h3>
       <br />
+
       <PredefinedRange
         disabledDates={disabledDates}
         onChange={handleChangeValues}
         minDays={3}
         maxDays={7}
+      />
+      <br /> <br /> <br />
+
+      <h3>Fixed number of days in date range selector : days = 5 </h3>
+      <br />
+
+
+      <PredefinedRange
+        disabledDates={disabledDates}
+        onChange={handleChangeValues}
+        minDays={5}
+        maxDays={5}
       />
 
       {/* <Box

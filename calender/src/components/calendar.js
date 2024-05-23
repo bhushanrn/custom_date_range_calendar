@@ -141,7 +141,7 @@ const TezDateRangePicker = ({
         if (startValue !== null && endValue !== null) {
 
             res = disabledDates.some((disabledDate) => {
-                return disabledDate > startValue && disabledDate < endValue;
+                return disabledDate >= startValue && disabledDate <= endValue;
             });
         }
 
