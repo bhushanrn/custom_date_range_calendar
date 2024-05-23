@@ -2,8 +2,10 @@ import TwoInputs from "./components/twoInputs";
 import SingleInput from "./components/singleInput";
 import { Box, Button } from "@mui/material";
 import { useState } from "react";
+import PredefinedRange from "./components/predefined_range/predefinedRange";
 
 function App() {
+
   const disabledDates = [
     "2024-07-11",
     "2024-07-12",
@@ -41,17 +43,36 @@ function App() {
 
   return (
     <>
+      <br /> <br /> <br /> <br />
+
+      <h3>Two Inputs date range selector : </h3>
+      <br />
       <TwoInputs
         disabledDates={disabledDates}
         onChange={handleChangeValues}
       />
 
+      <br /> <br /> <br /> <br />
+
+      <h3>One Input date range selector : </h3>
+      <br />
       <SingleInput
         disabledDates={disabledDates}
         onChange={handleChangeValues}
       />
 
-      <Box
+      <br /> <br /> <br /> <br />
+
+      <h3>Predefined minDays and maxDays date range selector : minDays = 3 , maxDays = 7 </h3>
+      <br />
+      <PredefinedRange
+        disabledDates={disabledDates}
+        onChange={handleChangeValues}
+        minDays={3}
+        maxDays={7}
+      />
+
+      {/* <Box
         sx={{
           marginTop: "40px",
         }}
@@ -67,8 +88,14 @@ function App() {
         <h4> onChange arrow function with two arguments </h4>
         <br />
 
-        {/* <Button onClick={() => temp()} > CHECK </Button> */}
-      </Box>
+      </Box> */}
+
+
+      <br /> <br />
+
+      <Button onClick={() => temp()} > CHECK </Button>
+
+
     </>
   );
 }

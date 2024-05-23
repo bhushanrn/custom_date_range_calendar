@@ -136,9 +136,12 @@
   border-radius: 0 50px 50px 0;
 }
 
-
 .in-range{
   background-color: #d7f0ff;
+}
+
+.disabled-for-selection {
+  color: grey;
 }
 
 .in-range:nth-child(7n){

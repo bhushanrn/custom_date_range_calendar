@@ -133,7 +133,6 @@ export default function SingleInput({
             <Box
                 sx={{
                     display: "flex",
-                    marginTop: 10,
                     gap: 10,
                 }}
             >

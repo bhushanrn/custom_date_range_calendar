@@ -1,18 +1,17 @@
 import {
     Box,
-    ClickAwayListener,
     Popover,
     TextField,
-    Tooltip,
-    tooltipClasses,
 } from "@mui/material";
 import { useState } from "react";
 import CalendarWrapper from "./calendarWrapper";
-import "./inputBox.css"
+import "./../inputBox.css"
 
-export default function TwoInputs({
+export default function PredefinedRange({
     sx,
     disabledDates,
+    minDays,
+    maxDays,
     onChange
 }) {
     const [finalCheckInValue, setFinalCheckInValue] = useState("");
@@ -152,6 +151,8 @@ export default function TwoInputs({
                             handleSecondValue={handleSecondValue}
                             apply={handleApplyBtnClick}
                             onClear={handleClear}
+                            minDays={minDays}
+                            maxDays={maxDays}
                         />
                     </Popover>
                 ) : null}
