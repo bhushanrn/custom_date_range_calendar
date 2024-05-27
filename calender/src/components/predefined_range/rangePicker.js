@@ -298,6 +298,11 @@ const RangePicker = ({
                             selectedStartDate !== null && selectedEndDate === null && !isAvailableForSelection && !isPast && !isDateDisabled(currentDate)
                         );
 
+                        // removing this line from line below ` ${isPast && "past-date"}` since we do not need this for now
+                        //  ${
+                        //     isDisabledForSelection &&
+                        //     "disabled-for-selection"
+                        // }
 
                         return (
                             <div
@@ -305,10 +310,7 @@ const RangePicker = ({
                                 className={`date 
                                 
                                 ${isPast && "past-date"}
-                                
-                                ${isDisabledForSelection &&
-                                    "disabled-for-selection"
-                                    }
+                              
                                  
                                 ${isWithinRange(day + 1) && "in-range"} 
                                 ${selectedStartDate &&

@@ -106,7 +106,7 @@ function App() {
 
       <br /> <br />
 
-      <Button onClick={() => temp()} > CHECK </Button>
+      {/* <Button onClick={() => temp()} > CHECK </Button> */}
 
 
     </>
